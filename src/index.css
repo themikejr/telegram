@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .prose {
+    max-width: none;
+  }
+  .prose pre {
+    margin: 1em 0;
+    padding: 1em;
+    background-color: #f8f9fa;
+    border-radius: 0.375rem;
+    overflow-x: auto;
+  }
+  .prose pre > div {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+  .prose blockquote p {
+    margin: 0;
+  }
+  .prose blockquote p:first-of-type::before,
+  .prose blockquote p:last-of-type::after {
+    content: none;
+  }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .prose thead {
+    border-bottom: 2px solid #e5e7eb;
+  }
+  .prose tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .prose tbody tr:last-child {
+    border-bottom: none;
+  }
+  .prose :not(pre) > code {
+    background-color: #f3f4f6;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25em;
+    font-size: 0.875em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+/* MD Editor Overrides */
+.w-md-editor {
+  background-color: white !important;
+}
+
+.w-md-editor-toolbar {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  background-color: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.w-md-editor-text {
+  padding: 1rem !important;
+}
+
+.w-md-editor-text-pre > code,
+.w-md-editor-text-input {
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+}
+
+.w-md-editor-toolbar ul li button {
+  color: #475569 !important;
+}
+
+.w-md-editor-toolbar ul li button:hover {
+  color: #1e293b !important;
+  background-color: #e2e8f0 !important;
+}
