@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import MDEditor from '@uiw/react-md-editor';
@@ -6,6 +6,12 @@ import { ImageUpload } from './ImageUpload';
 
 export function MessageForm({ onMessageChange, message }) {
   const [sending, setSending] = useState(false);
+  const messageRef = useRef(message);
+
+  // Update ref when message changes
+  React.useEffect(() => {
+    messageRef.current = message;
+  }, [message]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,10 +35,20 @@ export function MessageForm({ onMessageChange, message }) {
     }
   };
 
+  const handleEditorChange = (value) => {
+    messageRef.current = value || '';
+    onMessageChange(value || '');
+  };
+
   const handleImageUpload = useCallback((url) => {
+    const currentMessage = messageRef.current;
     const imageMarkdown = `![](${url})`;
-    onMessageChange(message ? `${message}\n${imageMarkdown}` : imageMarkdown);
-  }, [message, onMessageChange]);
+    const newMessage = currentMessage
+      ? `${currentMessage}\n${imageMarkdown}`
+      : imageMarkdown;
+
+    onMessageChange(newMessage);
+  }, [onMessageChange]);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -43,7 +59,7 @@ export function MessageForm({ onMessageChange, message }) {
         <div data-color-mode="light" className="mb-4">
           <MDEditor
             value={message}
-            onChange={(val) => onMessageChange(val || '')}
+            onChange={handleEditorChange}
             preview="edit"
             height={400}
             visibleDragbar={false}
